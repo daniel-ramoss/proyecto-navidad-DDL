@@ -1,3 +1,2 @@
 <?php
-// Luismi
 //se comprueba si el usuario existe o no...
