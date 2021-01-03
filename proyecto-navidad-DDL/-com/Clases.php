@@ -1,4 +1,5 @@
 <?php
+// Luismi
 
 abstract class Dato
 {
@@ -8,7 +9,7 @@ abstract class Dato
 class Vuelo extends Dato
 {
     private int $id;
-    private date $fechaVuelo;
+    private DateTime $fechaVuelo;
     private int $asientosTotal;
     private int $asientosLibres;
     private int $asientosComprados;
@@ -16,7 +17,7 @@ class Vuelo extends Dato
     private string $destino;
     private float $precio;
 
-    public function __construct(int $id, date $fechaVuelo, int $asientosTotal, int $asientosLibres, int $asientosComprados, string $inicio, string $destino, float $precio)
+    public function __construct(int $id, DateTime $fechaVuelo, int $asientosTotal, int $asientosLibres, int $asientosComprados, string $inicio, string $destino, float $precio)
     {
         $this->id = $id;
         $this->fechaVuelo = $fechaVuelo;
@@ -26,16 +27,6 @@ class Vuelo extends Dato
         $this->inicio = $inicio;
         $this->destino = $destino;
         $this->precio = $precio;
-    }
-
-    public function getNombre(): string
-    {
-        return $this->nombre;
-    }
-
-    public function setNombre(string $nombre)
-    {
-        $this->nombre = $nombre;
     }
 
     public function getId(): int
@@ -48,12 +39,12 @@ class Vuelo extends Dato
         $this->id = $id;
     }
 
-    public function getFechaVuelo(): date
+    public function getFechaVuelo(): DateTime
     {
         return $this->fechaVuelo;
     }
 
-    public function setFechaVuelo(date $fechaVuelo): void
+    public function setFechaVuelo(DateTime $fechaVuelo): void
     {
         $this->fechaVuelo = $fechaVuelo;
     }
@@ -121,12 +112,12 @@ class Vuelo extends Dato
 }
 class Pasajero extends Dato
 {
-    private string $idPasajero;
-    private string $idVuelo;
-    private string $idUsuario;
-    private string $numeroAsiento;
+    private int $idPasajero;
+    private int $idVuelo;
+    private int $idUsuario;
+    private int $numeroAsiento;
 
-    public function __construct(string $idPasajero, string $idVuelo, string $idUsuario, string $numeroAsiento)
+    public function __construct(int $idPasajero, int $idVuelo, int $idUsuario, int $numeroAsiento)
     {
         $this->idPasajero = $idPasajero;
         $this->idVuelo = $idVuelo;
@@ -135,48 +126,48 @@ class Pasajero extends Dato
     }
 
 
-    public function getIdPasajero(): string
+    public function getIdPasajero(): int
     {
         return $this->idPasajero;
     }
 
 
-    public function setIdPasajero(string $idPasajero): void
+    public function setIdPasajero(int $idPasajero): void
     {
         $this->idPasajero = $idPasajero;
     }
 
 
-    public function getIdVuelo(): string
+    public function getIdVuelo(): int
     {
         return $this->idVuelo;
     }
 
 
-    public function setIdVuelo(string $idVuelo): void
+    public function setIdVuelo(int $idVuelo): void
     {
         $this->idVuelo = $idVuelo;
     }
 
 
-    public function getIdUsuario(): string
+    public function getIdUsuario(): int
     {
         return $this->idUsuario;
     }
 
 
-    public function setIdUsuario(string $idUsuario): void
+    public function setIdUsuario(int $idUsuario): void
     {
         $this->idUsuario = $idUsuario;
     }
 
 
-    public function getNumeroAsiento(): string
+    public function getNumeroAsiento(): int
     {
         return $this->numeroAsiento;
     }
 
-    public function setNumeroAsiento(string $numeroAsiento): void
+    public function setNumeroAsiento(int $numeroAsiento): void
     {
         $this->numeroAsiento = $numeroAsiento;
     }

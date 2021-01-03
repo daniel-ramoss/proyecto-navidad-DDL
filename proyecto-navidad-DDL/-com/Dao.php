@@ -1,4 +1,5 @@
 <?php
+// Luismi
 
 require_once "Clases.php";
 require_once "Varios.php";
@@ -10,7 +11,7 @@ class DAO
     private function obtenerPdoConexionBD(): PDO
     {
         $servidor = "localhost";
-        $bd = "Aerolinea";
+        $bd = "aerolinea";
         $identificador = "root";
         $contrasenna = "";
         $opciones = [
