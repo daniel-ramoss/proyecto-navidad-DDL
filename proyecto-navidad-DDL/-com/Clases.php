@@ -184,14 +184,3 @@ class Pasajero extends Dato
         $this->numeroAsiento = $numeroAsiento;
     }
 }
-class Usuario extends Dato
-{
-
-    private  $identificador;
-    private  $contrasenna;
-    private  $nombre;
-    private  $apellidos;
-    private  $codigoCookie;
-
-
-}

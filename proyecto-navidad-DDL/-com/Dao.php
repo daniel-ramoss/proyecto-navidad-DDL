@@ -3,6 +3,7 @@
 
 require_once "Clases.php";
 require_once "Varios.php";
+session_start();
 
 class DAO
 {
@@ -15,8 +16,8 @@ class DAO
         $identificador = "root";
         $contrasenna = "";
         $opciones = [
-            PDO::ATTR_EMULATE_PREPARES   => false, // turn off emulation mode for "real" prepared statements
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, //turn on errors in the form of exceptions
+            PDO::ATTR_EMULATE_PREPARES => false, // turn off emulation mode for "real" prepared statements
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //turn on errors in the form of exceptions
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //make the default fetch be an associative array
         ];
 
@@ -52,6 +53,84 @@ class DAO
         else return $actualizacion->rowCount();
     }
 
+    /* USUARIO */
+
+    function obtenerUsuario(string $identificador, string $contrasenna): ?array
+    {
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Usuario WHERE identificador = ?  & BINARY contrasenna = ?",
+            [$identificador,$contrasenna]
+        );
+        if ($rs) return self::marcarSesionComoIniciada($rs[0]);
+        else return null;
+    }
+
+    function obtenerUsuarioCreado(string $identificador): ?array
+    {
+        $conexion = obtenerPdoConexionBD();
+        $sql1 = "SELECT * FROM Usuario WHERE id = ?;";
+
+        $select = $conexion->prepare($sql1);
+        $select->execute([$identificador]); // Se añade el parámetro a la consulta preparada.
+        $rs = $select->fetchAll();
+
+        return $select->rowCount()==1 ? $rs[0] : null;
+    }
+
+    function marcarSesionComoIniciada(array $arrayUsuario)
+    {
+        // TODO Anotar en el post-it todos estos datos:
+        $_SESSION["id"] = $arrayUsuario["id"];
+        $_SESSION["identificador"] = $arrayUsuario["identificador"];
+        $_SESSION["contrasenna"] = $arrayUsuario["contrasenna"];
+        $_SESSION["nombre"] = $arrayUsuario["nombre"];
+        $_SESSION["apellidos"] = $arrayUsuario["apellidos"];
+    }
+
+    function haySesionIniciada(): bool
+    {
+        // TODO Pendiente hacer la comprobación.
+
+        // Está iniciada si isset($_SESSION["id"])
+        return isset($_SESSION["id"]) ? true : false;
+
+    }
+
+    function cerrarSesion()
+    {
+        session_destroy();
+        setcookie('codigoCookie', "");
+        setcookie('identificador',"");
+        unset($_SESSION);
+        // TODO session_destroy() y unset de $_SESSION (por si acaso).
+    }
+
+    function borrarCookies()
+    {
+        setcookie("identificador", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.
+        setcookie("codigoCookie", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.}
+    }
+
+    function establecerSesionCookie(array $arrayUsuario)
+    {
+        // Creamos un código cookie muy complejo (no necesariamente único).
+        $codigoCookie = generarCadenaAleatoria(32); // Random...
+
+        actualizarCodigoCookieEnBD($codigoCookie);
+
+        // Enviamos al cliente, en forma de cookies, el identificador y el codigoCookie:
+        setcookie("identificador", $arrayUsuario["identificador"], time() + 600);
+        setcookie("codigoCookie", $codigoCookie, time() + 600);
+    }
+
+    function destruirSesionRamYCookie()
+    {
+        session_destroy();
+        actualizarCodigoCookieEnBD(Null);
+        borrarCookies();
+        unset($_SESSION); // Por si acaso
+    }
+
 
 
     /* VUELO */
@@ -72,11 +151,14 @@ class DAO
         else return null;
     }
 
-    public static function vueloActualizar($vuelo)
+    public static function vueloActualizar($v)
     {
         self::ejecutarActualizacion(
-            "UPDATE Vuelos SET nombre=? WHERE id=?",
-            [$vuelo->getNombre(),$vuelo->getId() ]
+            "UPDATE Vuelos SET fechaIda=?,fechaVuelta=?,asientosTotal=?,
+                asientosLibres=?, asientosComprados=?, origen= ?, destino=?, precio =? WHERE id=?",
+            [$v->getFechaIda(),$v->getFechaVuelta(),$v->getAsientosTotal(),
+                $v->getAsientosLibres(),$v->getAsientosComprados(),$v->getOrigen(),
+                $v->getDestino(),$v->getPrecio(),$v->getId()]
         );
     }
 
@@ -92,7 +174,9 @@ class DAO
     {
         self::ejecutarActualizacion(
             "INSERT INTO Vuelos (nombre) VALUES (?)",
-            [$v]
+            [$v->getFechaIda(),$v->getFechaVuelta(),$v->getAsientosTotal(),
+                $v->getAsientosLibres(), $v->getAsientosComprados(),$v->getOrigen(),
+                $v->getDestino(),$v->getPrecio()]
         );
     }
 
@@ -100,7 +184,7 @@ class DAO
     {
         $datos = [];
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM Vuelos ORDER BY fechaVuelo",
+            "SELECT * FROM Vuelos ORDER BY fechaIda",
             []
         );
 
@@ -123,6 +207,75 @@ class DAO
             array_push($datos, $vuelo);
         }
        return $datos;
+    }
+
+    //Pasajero
+    private static function pasajeroCrearDesdeRs(array $fila): Pasajero
+    {
+        return new Pasajero($fila["idPasajero"], $fila["idVuelo"], $fila["idUsuario"], $fila["numeroAsiento"], $fila["asientosLibres"]);
+    }
+
+    public static function pasajeroObtenerPorId(int $id): ?Pasajero
+    {
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Pasajeros WHERE idPasajero=?",
+            [$id]
+        );
+        if ($rs) return self::pasajeroCrearDesdeRs($rs[0]);
+        else return null;
+    }
+
+    public static function pasajeroActualizar(Pasajero $pasajero)
+    {
+        self::ejecutarActualizacion(
+            "UPDATE Pasajeros SET idVuelo=?,idUsuario=?,numeroAsiento=? WHERE idPasajero=?",
+            [$pasajero->getIdVuelo(),$pasajero->getIdUsuario(),$pasajero->getNumeroAsiento(),$pasajero->getIdPasajero()]
+        );
+    }
+
+    public static function pasajeroEliminar($id)
+    {
+        self::ejecutarActualizacion(
+            "DELETE FROM Pasajeros WHERE id=?",
+            [$id]
+        );
+    }
+
+    public static function pasajeroCrear(Pasajero $pasajero)
+    {
+        self::ejecutarActualizacion(
+            "INSERT INTO Pasajeros (idVuelo,idUsuario,numeroAsiento) VALUES (?,?,?)",
+            [$pasajero->getIdVuelo(),$pasajero->getIdUsuario(),$pasajero->getNumeroAsiento()]
+        );
+    }
+
+    public static function pasajeroObtenerTodas(): array
+    {
+        $datos = [];
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Pasajeros ORDER BY idVuelo",
+            []
+        );
+
+        foreach ($rs as $fila) {
+            $pasajero = self::pasajeroCrearDesdeRs($fila);
+            array_push($datos, $pasajero);
+        }
+
+        return $datos;
+    }
+    public static function pasajeroObtenerPorParametros(int $idPasajero, int $idVuelo,int $idUsuario,int $numAsiento): array
+    {
+        $datos = [];
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Pasajeros WHERE idPasajero=? & idVuelo=? & idUsuario=? & numAsiento=?",
+            [$idPasajero,$idVuelo,$idUsuario,$numAsiento]
+        );
+        foreach ($rs as $fila) {
+            $pasajero = self::pasajeroCrearDesdeRs($fila);
+            array_push($datos, $pasajero);
+        }
+        return $datos;
     }
 
 }
