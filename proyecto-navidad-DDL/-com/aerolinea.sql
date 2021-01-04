@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-12-2020 a las 17:10:44
+-- Tiempo de generación: 04-01-2021 a las 12:52:36
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -20,6 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `aerolinea`
 --
+
+CREATE DATABASE IF NOT EXISTS `Aerolinea` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+USE `Aerolinea`;
 
 -- --------------------------------------------------------
 
@@ -77,8 +80,8 @@ INSERT INTO `usuario` (`id`, `identificador`, `contrasenna`, `codigoCookie`, `ti
 
 CREATE TABLE `vuelos` (
   `id` int(11) NOT NULL,
-  `idVuelo` int(11) NOT NULL,
-  `fechaVuelo` date NOT NULL,
+  `fechaIda` datetime NOT NULL,
+  `fechaVuelta` datetime NOT NULL,
   `asientosTotal` int(10) NOT NULL,
   `asientosLibres` int(10) NOT NULL,
   `asientosComprados` int(10) NOT NULL,
@@ -91,10 +94,10 @@ CREATE TABLE `vuelos` (
 -- Volcado de datos para la tabla `vuelos`
 --
 
-INSERT INTO `vuelos` (`id`, `idVuelo`, `fechaVuelo`, `asientosTotal`, `asientosLibres`, `asientosComprados`, `inicio`, `destino`, `precio`) VALUES
-(1, 0, '2020-02-03', 100, 60, 40, 'Madrid', 'Londres', 0),
-(2, 0, '2020-02-06', 100, 40, 60, 'Madrid', 'París', 0),
-(3, 0, '2020-02-08', 100, 70, 30, 'Madrid', 'Roma', 0);
+INSERT INTO `vuelos` (`id`, `fechaIda`, `fechaVuelta`, `asientosTotal`, `asientosLibres`, `asientosComprados`, `inicio`, `destino`, `precio`) VALUES
+(1, '2020-02-03 10:30:00', '2020-02-03 12:30:00', 100, 60, 40, 'Madrid', 'Londres', 0),
+(2, '2020-02-04 11:15:00', '2020-02-03 13:30:00', 100, 40, 60, 'Madrid', 'París', 0),
+(3, '2020-02-06 17:00:00', '2020-02-03 19:00:00', 100, 70, 30, 'Madrid', 'Roma', 0);
 
 --
 -- Índices para tablas volcadas
@@ -121,15 +124,26 @@ ALTER TABLE `vuelos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Restricciones para tablas volcadas
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- Filtros para la tabla `pasajeros`
+-- AUTO_INCREMENT de la tabla `pasajeros`
 --
 ALTER TABLE `pasajeros`
-  ADD CONSTRAINT `fk_idUsuariox` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `fk_idVuelox` FOREIGN KEY (`idVuelo`) REFERENCES `vuelos` (`id`);
+  MODIFY `idPasajero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `vuelos`
+--
+ALTER TABLE `vuelos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
