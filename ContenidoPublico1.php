@@ -30,7 +30,7 @@ $vuelos=DAO::vueloObtenerTodas();
         <td> <?=$vuelos-> getOrigen()?>   </td>
         <td> <?=$vuelos-> getDestino()?> </td>
         <td> <?=$vuelos-> getFecha()?> </td>
-        <td><a href="SesionInicioMostrarFormulario.php"> (X) </a> </td>
+        <td><a href="SesionInicioMostrarFormulario.php"></a> </td>
 
 
     </tr>
