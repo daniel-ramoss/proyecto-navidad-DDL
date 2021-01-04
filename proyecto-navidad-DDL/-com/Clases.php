@@ -8,14 +8,14 @@ abstract class Dato
 
 class Vuelo extends Dato
 {
-    private int $id;
-    private DateTime $fechaVuelo;
-    private int $asientosTotal;
-    private int $asientosLibres;
-    private int $asientosComprados;
-    private string $inicio;
-    private string $destino;
-    private float $precio;
+    private  $id;
+    private  $fechaVuelo;
+    private  $asientosTotal;
+    private  $asientosLibres;
+    private  $asientosComprados;
+    private  $inicio;
+    private  $destino;
+    private  $precio;
 
     public function __construct(int $id, DateTime $fechaVuelo, int $asientosTotal, int $asientosLibres, int $asientosComprados, string $inicio, string $destino, float $precio)
     {
@@ -112,10 +112,10 @@ class Vuelo extends Dato
 }
 class Pasajero extends Dato
 {
-    private int $idPasajero;
-    private int $idVuelo;
-    private int $idUsuario;
-    private int $numeroAsiento;
+    private  $idPasajero;
+    private  $idVuelo;
+    private  $idUsuario;
+    private  $numeroAsiento;
 
     public function __construct(int $idPasajero, int $idVuelo, int $idUsuario, int $numeroAsiento)
     {
@@ -175,11 +175,11 @@ class Pasajero extends Dato
 class Usuario extends Dato
 {
 
-    private string $identificador;
-    private string $contrasenna;
-    private string $nombre;
-    private string $apellidos;
-    private string $codigoCookie;
+    private  $identificador;
+    private  $contrasenna;
+    private  $nombre;
+    private  $apellidos;
+    private  $codigoCookie;
 
 
 }
