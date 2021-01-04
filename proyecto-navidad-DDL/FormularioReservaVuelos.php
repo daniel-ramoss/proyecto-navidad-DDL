@@ -16,13 +16,13 @@
 <div>
 <form action='ListadoVuelosParametros.php' method='post'>
     <label><strong>Origen: </strong></label>
-    <input type='text' name='Origen' value='Ciudad'>
+    <input type='text' name='origen' value=''>
     <label><strong>Destino: </strong></label>
-    <input type='text' name='Destino' value='Ciudad'><br><br>
+    <input type='text' name='destino' value=''><br><br>
     <label><strong>Fecha Ida: </strong></label>
-    <input type='date' name='FechaIda' value='Fecha Ida'>
+    <input type='date' name='fechaIda' value=''>
     <label><strong>Fecha Vuelta: </strong></label>
-    <input type='date' name='FechaVuelta' value='Fecha Vuelta'><br><br>
+    <input type='date' name='fechaVuelta' value=''><br><br>
     <input type='submit' name='btnBuscaVuelos' value='Buscar'>
 </form>
 </div>

@@ -111,4 +111,18 @@ class DAO
 
         return $datos;
     }
+    public static function vueloObtenerPorParametros(string $origen, string $destino,date $fechaIda,date $fechaVuelta): array
+    {
+        $datos = [];
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Vuelos WHERE fechaIda=?,fechaVuelta=?,origen=?,destino=?",
+            [$fechaIda,$fechaVuelta,$origen,$destino]
+        );
+        foreach ($rs as $fila) {
+            $vuelo = self::vueloCrearDesdeRs($fila);
+            array_push($datos, $vuelo);
+        }
+       return $datos;
+    }
+
 }

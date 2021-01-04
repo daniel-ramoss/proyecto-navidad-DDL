@@ -4,14 +4,34 @@
 require_once "-com/Varios.php";
 require_once "-com/Dao.php";
 
-$conexion=obtenerPdoConexionBD();
-$origen=$_REQUEST["origen"];
-$destino=$_REQUEST["destino"];
-$fechaIda=$_REQUEST["fechaIda"];
-$fechaVuelta=$_REQUEST["fechaVuelta"];
-$precio=$_REQUEST["precio"];
+if (!isset($_REQUEST["origen"])){
+    $origen = "";
+} else{
+    $origen = $_REQUEST["origen"];
+}
 
-$vuelos=DAO::vueloObtenerPorParametros($origen, $destino, $fechaIda, $fechaVuelta, $precio); ///hay que crear esta función en el Dao
+if (!isset($_REQUEST["destino"])){
+    $destino = "";
+} else{
+    $destino = $_REQUEST["destino"];
+}
+
+if (!isset($_REQUEST["fechaIda"])){
+    $fechaIda = "";
+} else{;
+    $fechaIda = date("d/m/Y", strtotime($_REQUEST["fechaIda"]));
+    echo $fechaIda;
+}
+
+if (!isset($_REQUEST["fechaVuelta"])){
+    $fechaVuelta = "";
+} else{
+    $fechaVuelta =date("d/m/Y", strtotime($_REQUEST["fechaVuelta"]));
+}
+
+//$precio=$_REQUEST["precio"];
+
+$vuelos=DAO::vueloObtenerPorParametros($origen, $destino, $fechaIda, $fechaVuelta); ///hay que crear esta función en el Dao
 
 ?>
 
