@@ -1,37 +1,39 @@
 <?php
 // Dani
 // se muestran los vuelos cuyos parámetros (introducidos en FormularioReservaVuelos) son similares
-require_once "-com/Varios.php";
+require_once "-com/Clases.php";
 require_once "-com/Dao.php";
 
 if (!isset($_REQUEST["origen"])){
-    $origen = "";
+    $origen = " ";
 } else{
     $origen = $_REQUEST["origen"];
 }
 
 if (!isset($_REQUEST["destino"])){
-    $destino = "";
+    $destino = " ";
 } else{
     $destino = $_REQUEST["destino"];
 }
 
 if (!isset($_REQUEST["fechaIda"])){
-    $fechaIda = "";
-} else{;
-    $fechaIda = date("d/m/Y", strtotime($_REQUEST["fechaIda"]));
+    $fechaIda = " ";
+} else{
+    $fechaIda = $_REQUEST["fechaIda"];
     echo $fechaIda;
 }
 
 if (!isset($_REQUEST["fechaVuelta"])){
-    $fechaVuelta = "";
+    $fechaVuelta = " ";
 } else{
-    $fechaVuelta =date("d/m/Y", strtotime($_REQUEST["fechaVuelta"]));
+    $fechaVuelta = $_REQUEST["fechaVuelta"];
 }
 
 //$precio=$_REQUEST["precio"];
 
 $vuelos=DAO::vueloObtenerPorParametros($origen, $destino, $fechaIda, $fechaVuelta); ///hay que crear esta función en el Dao
+
+//echo print_r($vuelos);
 
 ?>
 

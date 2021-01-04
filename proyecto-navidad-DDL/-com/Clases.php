@@ -9,24 +9,26 @@ abstract class Dato
 class Vuelo extends Dato
 {
     private  $id;
-    private  $fechaVuelo;
+    private  $fechaIda;
+    private  $fechaVuelta;
     private  $asientosTotal;
     private  $asientosLibres;
     private  $asientosComprados;
-    private  $inicio;
+    private  $origen;
     private  $destino;
     private  $precio;
 
-    public function __construct(int $id, DateTime $fechaVuelo, int $asientosTotal, int $asientosLibres, int $asientosComprados, string $inicio, string $destino, float $precio)
+    public function __construct(int $id, string $fechaIda, string $fechaVuelta, int $asientosTotal, int $asientosLibres, int $asientosComprados, string $origen, string $destino, float $precio)
     {
-        $this->id = $id;
-        $this->fechaVuelo = $fechaVuelo;
-        $this->asientosTotal = $asientosTotal;
-        $this->asientosLibres = $asientosLibres;
-        $this->asientosComprados = $asientosComprados;
-        $this->inicio = $inicio;
-        $this->destino = $destino;
-        $this->precio = $precio;
+        $this->setId($id);
+        $this->setFechaIda($fechaIda);
+        $this->setFechaVuelta($fechaVuelta);
+        $this->setAsientosTotal($asientosTotal);
+        $this->setAsientosLibres($asientosLibres);
+        $this->setAsientosComprados($asientosComprados);
+        $this->setOrigen($origen);
+        $this->setDestino($destino);
+        $this->setPrecio($precio);
     }
 
     public function getId(): int
@@ -39,14 +41,24 @@ class Vuelo extends Dato
         $this->id = $id;
     }
 
-    public function getFechaVuelo(): DateTime
+    public function getFechaIda(): string
     {
-        return $this->fechaVuelo;
+        return $this->fechaIda;
     }
 
-    public function setFechaVuelo(DateTime $fechaVuelo): void
+    public function setFechaIda(string $fechaIda): void
     {
-        $this->fechaVuelo = $fechaVuelo;
+        $this->fechaIda = $fechaIda;
+    }
+
+    public function getFechaVuelta(): string
+    {
+        return $this->fechaVuelta;
+    }
+
+    public function setFechaVuelta(string $fechaVuelta): void
+    {
+        $this->fechaVuelta = $fechaVuelta;
     }
 
     public function getAsientosTotal(): int
@@ -80,14 +92,14 @@ class Vuelo extends Dato
         $this->asientosComprados = $asientosComprados;
     }
 
-    public function getInicio(): string
+    public function getOrigen(): string
     {
-        return $this->inicio;
+        return $this->origen;
     }
 
-    public function setInicio(string $inicio): void
+    public function setOrigen(string $origen): void
     {
-        $this->inicio = $inicio;
+        $this->origen = $origen;
     }
 
     public function getDestino(): string
