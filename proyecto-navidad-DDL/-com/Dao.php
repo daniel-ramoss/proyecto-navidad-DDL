@@ -1,9 +1,10 @@
 <?php
 // Luismi
 
-require_once "Clases.php";
-require_once "Varios.php";
+require_once "-com/Clases.php";
+require_once "-com/Varios.php";
 session_start();
+
 
 class DAO
 {
@@ -138,7 +139,7 @@ class DAO
     private static function vueloCrearDesdeRs(array $fila): Vuelo
     {
         return new Vuelo($fila["id"], $fila["fechaIda"], $fila["fechaVuelta"], $fila["asientosTotal"], $fila["asientosLibres"],
-            $fila["asientosComprados"], $fila["inicio"], $fila["destino"], $fila["precio"]);
+            $fila["asientosComprados"], $fila["inicio"],$fila["destino"],$fila["precio"]);
     }
 
     public static function vueloObtenerPorId(int $id): ?Vuelo
@@ -195,11 +196,11 @@ class DAO
 
         return $datos;
     }
-    public static function vueloObtenerPorParametros(string $origen, string $destino,string $fechaIda,string $fechaVuelta): array
+    public static function vueloObtenerPorParametros(string $origen, string $destino, string $fechaIda, string $fechaVuelta): array
     {
         $datos = [];
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM Vuelos WHERE fechaIda=? & fechaVuelta=? & inicio=? & destino=?",
+            "SELECT * FROM Vuelos WHERE fechaIda=? & fechaVuelta=? & inicio=? & destino=? ORDER BY inicio",
             [$fechaIda,$fechaVuelta,$origen,$destino]
         );
         foreach ($rs as $fila) {

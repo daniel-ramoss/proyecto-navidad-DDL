@@ -16,19 +16,19 @@
 <div>
 <form action='ListadoVuelosParametros.php' method='post'>
     <label><strong>Origen: </strong></label>
-    <input type='text' name='origen' value=''>
+    <input type='text' name='Origen' value=''>
     <label><strong>Destino: </strong></label>
-    <input type='text' name='destino' value=''><br><br>
+    <input type='text' name='Destino' value=''><br><br>
     <label><strong>Fecha Ida: </strong></label>
-    <input type='date' name='fechaIda' value=''>
+    <input type='date' name='FechaIda' value=''>
     <label><strong>Fecha Vuelta: </strong></label>
-    <input type='date' name='fechaVuelta' value=''><br><br>
+    <input type='date' name='FechaVuelta' value=''><br><br>
     <input type='submit' name='btnBuscaVuelos' value='Buscar'>
 </form>
 </div>
 <br>
-<a href="ContenidoPublico1.php">Listado de Vuelos 1</a><br><br>
-<a href="ContenidoPublico2.php">Listado de Vuelos 2</a><br><br>
+
+<a href="ListadoVuelosCompleto.php">Listado de Vuelos </a><br><br>
 <a href='CrearUsuarioMostrarFormulario.php'> Registrarse </a>
 <!-- El segundo link debería llevar a CrearUsuarioMostrarFormulario.php y luego ese formulario tendrá un link debajo tipo:
  -ya tengo una cuenta (la cual llevará a SesionInicioMostrarFormulario.php al hacer click en esa opción)-->
