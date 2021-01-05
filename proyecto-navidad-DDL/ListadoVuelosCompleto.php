@@ -17,26 +17,29 @@ $vuelos=DAO::vueloObtenerTodas();
         <th>Fecha ida</th>
         <th>Fecha vuelta</th>
         <th>Reservar</th>
-
     </tr>
     <tr>
-        <?php
-        foreach ($vuelos as $vuelo) { ?>
+    <?php foreach ($vuelos as $vuelo) { ?>
     <tr>
-        <td> <?=$vuelos-> getOrigen()?>      </td>
-        <td> <?=$vuelos-> getDestino()?>     </td>
-        <td> <?=$vuelos-> getFechaIda()?>    </td>
-        <td> <?=$vuelos-> getFechaVuelta()?> </td>
-        <td><a href="SesionInicioMostrarFormulario.php"></a> </td>
-
-
+        <td> <?=$vuelo-> getOrigen()?>      </td>
+        <td> <?=$vuelo-> getDestino()?>     </td>
+        <td> <?=$vuelo-> getFechaIda()?>    </td>
+        <td> <?=$vuelo-> getFechaVuelta()?> </td>
+        <td> <a href="SesionInicioMostrarFormulario.php"</a> (X) </td>
     </tr>
     <?php } ?>
     </tr>
-</table>
-
+</table><br>
+<a href="FormularioReservaVuelos.php">Pagina Principal</a><br><br>
+<a href="SesionInicioMostrarFormulario.php">Iniciar Sesion</a>
 <br><br>
 
 
 </body>
+
+<style>
+    html{
+        background-color: #8bc9e3;
+    }
+</style>
 </html>
