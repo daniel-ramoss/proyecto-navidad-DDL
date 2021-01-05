@@ -29,8 +29,9 @@ $vuelos=DAO::vueloObtenerTodas();
         <td> <?=$vuelos-> getVuelo()?>    </td>
         <td> <?=$vuelos-> getOrigen()?>   </td>
         <td> <?=$vuelos-> getDestino()?> </td>
-        <td> <?=$vuelos-> getFecha()?> </td>
-        <td><a href="SesionInicioMostrarFormulario.php"> (X) </a> </td>
+        <td> <?=$vuelos-> getFechaIda()?> </td>
+        <td> <?=$vuelos-> getFechaVuelta()?> </td>
+        <td><a href="SesionInicioMostrarFormulario.php">(X)</a> </td>
 
 
     </tr>
