@@ -1,7 +1,11 @@
 <?php
 //mostramos formulario para el usuario
+require_once "-com/Varios.php";
+require_once "-com/Dao.php";
 
+if (DAO::haySesionIniciada()) redireccionar("ContenidoPrivado1.php");
 
+$datosErroneos = isset($_REQUEST["datosErroneos"]);
 ?>
 
 
@@ -15,13 +19,18 @@
 <body>
 
 <h1>Iniciar Sesión</h1>
+<?php if ($datosErroneos) { ?>
+    <p style='color: red;'>No se ha podido iniciar sesión con los datos proporcionados. Inténtelo de nuevo.</p>
+<?php } ?>
+
+
 <div>
-<form action='SesionInicioComprobar.php' method='post'>
+<form action='SesionInicioComprobar.php' method='get'>
     <label><strong>NOMBRE USUARIO: </strong></label>
-    <input type='text' name='identificador' value=''>
+    <input type='text' name='identificador'>
     <br><br>
     <label><strong>CONTRASEÑA: </strong></label>
-    <input type='text' name='contrasenna' value=''>
+    <input type='password' name='contrasenna'>
     <br><br>
     <label for='recordar'>RECORDAR:</label>
     <input type='checkbox' name='recordar' id='recordar'>

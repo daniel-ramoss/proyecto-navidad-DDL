@@ -32,20 +32,20 @@ class DAO
         return $conexionBD;
     }
 
-    private static function ejecutarConsulta(string $sql, array $parametros): array
+    private static function ejecutarConsulta(string $sql, array $parametros): ?array
     {
-        if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBd();
+        if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBD();
 
         $select = self::$pdo->prepare($sql);
         $select->execute($parametros);
         $rs = $select->fetchAll();
 
-        return $rs;
+        return $select->rowCount()==1 ? $rs : null;
     }
 
     private static function ejecutarActualizacion(string $sql, array $parametros): ?int
     {
-        if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBd();
+        if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBD();
 
         $actualizacion = self::$pdo->prepare($sql);
         $sqlConExito = $actualizacion->execute($parametros);
@@ -56,29 +56,24 @@ class DAO
 
     /* USUARIO */
 
-    function obtenerUsuario(string $identificador, string $contrasenna): ?array
+    public function usuarioObtener(string $identificador, string $contrasenna): array
     {
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM Usuario WHERE identificador = ?  & BINARY contrasenna = ?",
-            [$identificador,$contrasenna]
-        );
-        if ($rs) return self::marcarSesionComoIniciada($rs[0]);
-        else return null;
+            "SELECT * FROM usuario WHERE identificador = ?  && contrasenna = ?",
+            [$identificador,$contrasenna]);
+
+        /*if ($rs) return  $rs[0];
+        else return null;*/
+        return  $rs[0];
     }
 
-    function obtenerUsuarioCreado(string $identificador): ?array
+    public function obtenerUsuarioCreado(string $identificador): ?array
     {
-        $conexion = obtenerPdoConexionBD();
-        $sql1 = "SELECT * FROM Usuario WHERE id = ?;";
-
-        $select = $conexion->prepare($sql1);
-        $select->execute([$identificador]); // Se añade el parámetro a la consulta preparada.
-        $rs = $select->fetchAll();
-
-        return $select->rowCount()==1 ? $rs[0] : null;
+        $sql1 = "SELECT * FROM usuario WHERE id = ?;";
+;
     }
 
-    function marcarSesionComoIniciada(array $arrayUsuario)
+    public function marcarSesionComoIniciada(array $arrayUsuario)
     {
         // TODO Anotar en el post-it todos estos datos:
         $_SESSION["id"] = $arrayUsuario["id"];
@@ -88,7 +83,7 @@ class DAO
         $_SESSION["apellidos"] = $arrayUsuario["apellidos"];
     }
 
-    function haySesionIniciada(): bool
+    public function haySesionIniciada(): bool
     {
         // TODO Pendiente hacer la comprobación.
 
@@ -97,7 +92,7 @@ class DAO
 
     }
 
-    function cerrarSesion()
+     public function cerrarSesion()
     {
         session_destroy();
         setcookie('codigoCookie', "");
@@ -106,13 +101,13 @@ class DAO
         // TODO session_destroy() y unset de $_SESSION (por si acaso).
     }
 
-    function borrarCookies()
+    public function borrarCookies()
     {
         setcookie("identificador", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.
         setcookie("codigoCookie", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.}
     }
 
-    function establecerSesionCookie(array $arrayUsuario)
+     public function establecerSesionCookie(array $arrayUsuario)
     {
         // Creamos un código cookie muy complejo (no necesariamente único).
         $codigoCookie = generarCadenaAleatoria(32); // Random...
@@ -124,7 +119,7 @@ class DAO
         setcookie("codigoCookie", $codigoCookie, time() + 600);
     }
 
-    function destruirSesionRamYCookie()
+    public function destruirSesionRamYCookie()
     {
         session_destroy();
         actualizarCodigoCookieEnBD(Null);
