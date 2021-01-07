@@ -32,6 +32,9 @@ $vuelos=DAO::vueloObtenerTodas();
 </table><br>
 <a href="FormularioReservaVuelos.php">Pagina Principal</a><br><br>
 <a href="SesionInicioMostrarFormulario.php">Iniciar Sesion</a>
+<a href="UsuarioPerfilVer.php">Ver Perfil</a><br><br>
+<a href="SesionCerrar.php">Cerrar Sesion</a>
+
 <br><br>
 
 

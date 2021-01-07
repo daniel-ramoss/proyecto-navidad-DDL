@@ -75,8 +75,12 @@ INSERT INTO `usuario` (`id`, `identificador`, `contrasenna`, `codigoCookie`, `ti
 
 CREATE TABLE `vuelos` (
   `id` int(11) NOT NULL,
+  /*
   `fechaIda` datetime NOT NULL,
   `fechaVuelta` datetime NOT NULL,
+  */
+  `fechaIda` date NOT NULL,
+  `fechaVuelta` date,
   `asientosTotal` int(10) NOT NULL,
   `asientosLibres` int(10) NOT NULL,
   `asientosComprados` int(10) NOT NULL,
@@ -90,9 +94,23 @@ CREATE TABLE `vuelos` (
 --
 
 INSERT INTO `vuelos` (`id`, `fechaIda`, `fechaVuelta`, `asientosTotal`, `asientosLibres`, `asientosComprados`, `inicio`, `destino`, `precio`) VALUES
+/*
 (1, '2021-01-01 10:30:00', '2021-02-01 12:30:00', 100, 60, 40, 'Madrid', 'Londres', 0),
 (2, '2021-01-01 11:15:00', '2021-02-01 13:30:00', 100, 40, 60, 'Madrid', 'París', 0),
 (3, '2021-01-01 17:00:00', '2021-02-01 19:00:00', 100, 70, 30, 'Madrid', 'Roma', 0);
+*/
+(1,  '2021-01-01', '2021-02-01', 100, 60, 40, 'Madrid',    'Londres',   0),
+(2,  '2021-01-01', '2021-02-01', 100, 40, 60, 'Madrid',    'París',     0),
+(3,  '2021-01-01', '2021-02-01', 100, 70, 30, 'Madrid',    'Roma',      0),
+(4,  '2021-01-01', '2021-02-01', 100, 60, 40, 'Madrid',    'Berlín',    0),
+(5,  '2021-01-01', '2021-02-01', 100, 40, 60, 'Madrid',    'Barcelona', 0),
+(6,  '2021-01-01', '2021-02-01', 100, 70, 30, 'Madrid',    'Sevilla',   0),
+(7,  '2021-01-01', '2021-02-01', 100, 60, 40, 'Barcelona', 'Londres',   0),
+(8,  '2021-01-01', '2021-02-01', 100, 40, 60, 'Barcelona', 'París',     0),
+(9,  '2021-01-01', '2021-02-01', 100, 70, 30, 'Barcelona', 'Roma',      0),
+(10, '2021-01-01', '2021-02-01', 100, 60, 40, 'Barcelona', 'Berlín',    0),
+(11, '2021-01-01', '2021-02-01', 100, 40, 60, 'Barcelona', 'Madrid',    0),
+(12, '2021-01-01', '2021-02-01', 100, 70, 30, 'Barcelona', 'Sevilla',   0);
 
 --
 -- Índices para tablas volcadas

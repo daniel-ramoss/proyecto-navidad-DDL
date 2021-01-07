@@ -1,5 +1,6 @@
 <?php
 // Luismi
+
 declare(strict_types=1);
 
 // (Esta función no se utiliza en este proyecto pero se deja por si se optimizase el flujo de navegación.)

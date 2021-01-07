@@ -3,7 +3,7 @@
 require_once "-com/Varios.php";
 require_once "-com/Dao.php";
 
-if (DAO::haySesionIniciada()) redireccionar("ContenidoPrivado1.php");
+if (DAO::haySesionIniciada()) redireccionar("ListadoVuelosCompleto.php");
 
 $datosErroneos = isset($_REQUEST["datosErroneos"]);
 ?>
@@ -22,8 +22,6 @@ $datosErroneos = isset($_REQUEST["datosErroneos"]);
 <?php if ($datosErroneos) { ?>
     <p style='color: red;'>No se ha podido iniciar sesión con los datos proporcionados. Inténtelo de nuevo.</p>
 <?php } ?>
-
-
 <div>
 <form action='SesionInicioComprobar.php' method='get'>
     <label><strong>NOMBRE USUARIO: </strong></label>
@@ -40,6 +38,8 @@ $datosErroneos = isset($_REQUEST["datosErroneos"]);
 </div>
 <br>
 <a href='CrearUsuarioMostrarFormulario.php'>Registrarse</a>
+<a href="SesionCerrar.php">Cerrar Sesion</a>
+<a href="UsuarioPerfilVer.php">Ver Perfil</a>
 <br><br>
 <a href="FormularioReservaVuelos.php">Pagina Principal</a><br><br>
 <a href='ListadoVuelosCompleto.php'>Mostrar Vuelos</a>

@@ -1,31 +1,35 @@
-//David
 <?php
+//se muestran las caracteristicas del usuario que ha iniciado la session
 require_once "-com/Dao.php";
-require_once "-com/Clases.php";
+require_once "-com/Varios.php";
 
-if (DAO::haySesionIniciada()){
-    $_nombre=$_SESSION['nombre'];
-    $_apellidos=$_SESSION['apellidos'];
-    $_identificador=$_SESSION['identificador'];
-}else{
+if (DAO::haySesionIniciada()) {
+    $nombre=$_SESSION["nombre"];
+    $apellidos=$_SESSION["apellidos"];
+    $identificador=$_SESSION["identificador"];
+} else {
     redireccionar("CrearUsuarioMostrarFormulario.php");
 }
+
 ?>
 
 <html>
-<head>Perfil Usuario</head>
-
+<head> <meta charset="UTF-8"> </head>
 <body>
-<h3>Nombre: <?=$_nombre?> </h3>
-<h3>Apellidos: <?=$_apellidos?> </h3>
-<h3>Usuario: <?=$_identificador?> </h3>
+<h1>Perfil Usuario</h1>
 <br>
-<br>
-<a href="SesionCerrar.php">Cerrar sesión.</a><br><br>
-<a href="FormularioReservaVuelos.php">Página principal.</a><br><br>
-<a href="ListadoVuelosCompleto.php">Ver Vuelos.</a><br><br>
-
-
+<h4>Nombre: <?= $nombre ?> </h4>
+<h4>Apellidos: <?= $apellidos ?> </h4>
+<h4>Nombre Usuario: <?= $identificador ?></h4>
+<br><br>
+<a href="SesionCerrar.php">Cerrar Sesion</a><br><br>
+<a href="FormularioReservaVuelos.php">Pagina Principal</a><br><br>
+<a href="ListadoVuelosCompleto.php">Todos los Vuelos</a>
 
 </body>
+<style>
+    html{
+        background-color: #8bc9e3;
+    }
+</style>
 </html>
