@@ -7,8 +7,9 @@ if (DAO::haySesionIniciada()){
     $_nombre=$_SESSION['nombre'];
     $_apellidos=$_SESSION['apellidos'];
     $_identificador=$_SESSION['identificador'];
-}else
+}else{
     redireccionar("CrearUsuarioMostrarFormulario.php");
+}
 ?>
 
 <html>
