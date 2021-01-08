@@ -30,12 +30,22 @@ if (!isset($_REQUEST["fechaVuelta"])) {
 }
 
 $vuelos=DAO::vueloObtenerPorParametros($origen, $destino, $fechaIda, $fechaVuelta);
+$sesionIniciada = DAO::haySesionIniciada();
 
 ?>
 
 <html>
 <head>
     <meta charset='UTF-8'>
+    <?php
+    if($sesionIniciada){?>
+        <p>Hola, <a href='UsuarioPerfilVer.php'><?=$_SESSION["nombre"]?> <?=$_SESSION["apellidos"]?></a> <a href='SesionCerrar.php'>(Cerrar Sesión)</a></p>
+        <?php
+    }else{?>
+        <p><a href='SesionInicioMostrarFormulario.php'>Inicio de Sesión</a></p>
+        <?php
+    }
+    ?>
 </head>
 <body>
 <h1>¡Reserva tus vuelos!</h1>
@@ -72,9 +82,7 @@ $vuelos=DAO::vueloObtenerPorParametros($origen, $destino, $fechaIda, $fechaVuelt
 
 <br><br>
 <a href='FormularioReservaVuelos.php'>Volver</a><br><br>
-<a href='ListadoVuelosCompleto.php'>Todos los Vuelos</a><br><br>
-<a href='SesionInicioMostrarFormulario.php'>Iniciar Sesion</a><br><br>
-<a href="SesionCerrar.php">Cerrar Sesion</a>
+<a href='ListadoVuelosCompleto.php'>Todos los Vuelos</a><br><br>>
 </body>
 
 <style>

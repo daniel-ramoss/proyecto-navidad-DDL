@@ -110,13 +110,17 @@ class DAO
      public function establecerSesionCookie(array $arrayUsuario)
     {
         // Creamos un código cookie muy complejo (no necesariamente único).
-        $codigoCookie = generarCadenaAleatoria(32); // Random...
-
-        actualizarCodigoCookieEnBD($codigoCookie);
+        $codigoCookie = generarCadenaAleatoria(32); // Random..
+        //.
+        self::ejecutarActualizacion(
+            "UPDATE Usuario SET codigoCookie=? WHERE identificador=?",
+            [$codigoCookie,$arrayUsuario["identificador"]]
+        );
 
         // Enviamos al cliente, en forma de cookies, el identificador y el codigoCookie:
         setcookie("identificador", $arrayUsuario["identificador"], time() + 600);
         setcookie("codigoCookie", $codigoCookie, time() + 600);
+
     }
 
     public function destruirSesionRamYCookie()
@@ -211,7 +215,7 @@ class DAO
         return new Pasajero($fila["idPasajero"], $fila["idVuelo"], $fila["idUsuario"], $fila["numeroAsiento"], $fila["asientosLibres"]);
     }
 
-    public static function pasajeroObtenerPorId(int $id): ?Pasajero
+    public static function pasajeroObtenerPorId(string $id): ?Pasajero
     {
         $rs = self::ejecutarConsulta(
             "SELECT * FROM Pasajeros WHERE idPasajero=?",
@@ -224,38 +228,43 @@ class DAO
     public static function pasajeroActualizar(Pasajero $pasajero)
     {
         self::ejecutarActualizacion(
-            "UPDATE Pasajeros SET idVuelo=?,idUsuario=?,numeroAsiento=? WHERE idPasajero=?",
-            [$pasajero->getIdVuelo(),$pasajero->getIdUsuario(),$pasajero->getNumeroAsiento(),$pasajero->getIdPasajero()]
+            "UPDATE Pasajeros SET idVuelo=?,idUsuario=? WHERE idPasajero=?",
+            [$pasajero->getIdVuelo(),$pasajero->getIdUsuario(),$pasajero->getIdPasajero()]
         );
     }
 
-    public static function pasajeroEliminar($id)
+    public static function pasajeroEliminar(string $idUsuario)
     {
         self::ejecutarActualizacion(
-            "DELETE FROM Pasajeros WHERE id=?",
-            [$id]
+            "DELETE FROM Pasajeros WHERE idUsuario=?",
+            [$idUsuario]
         );
     }
 
-    public static function pasajeroCrear(Pasajero $pasajero)
+    public static function pasajeroCrear(string $idVuelo,string $idUsuario)
     {
         self::ejecutarActualizacion(
-            "INSERT INTO Pasajeros (idVuelo,idUsuario,numeroAsiento) VALUES (?,?,?)",
-            [$pasajero->getIdVuelo(),$pasajero->getIdUsuario(),$pasajero->getNumeroAsiento()]
+            "INSERT INTO Pasajeros (idVuelo,idUsuario) VALUES (?,?)",
+            [$idVuelo,$idUsuario]
         );
     }
 
-    public static function pasajeroObtenerTodas(): array
+    public static function pasajeroObtenerTodasId(string $idUsuario): array
     {
         $datos = [];
-        $rs = self::ejecutarConsulta(
-            "SELECT * FROM Pasajeros ORDER BY idVuelo",
-            []
+        /* $rsP = self::ejecutarConsulta(
+            "SELECT * FROM Pasajeros WHERE idUsuario=? ORDER BY idVuelo",
+            [$idUsuario]
+        );*/
+
+        $rsV = self::ejecutarConsulta(
+            "SELECT * FROM Vuelos WHERE id=(SELECT idVuelo FROM Pasajeros WHERE idUsuario=?)",
+            [$idUsuario]
         );
 
-        foreach ($rs as $fila) {
-            $pasajero = self::pasajeroCrearDesdeRs($fila);
-            array_push($datos, $pasajero);
+        foreach ($rsV as $fila) {
+            $vuelo = self::vueloCrearDesdeRs($fila);
+            array_push($datos, $vuelo);
         }
 
         return $datos;

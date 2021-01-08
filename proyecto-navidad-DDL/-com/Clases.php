@@ -127,14 +127,12 @@ class Pasajero extends Dato
     private  $idPasajero;
     private  $idVuelo;
     private  $idUsuario;
-    private  $numeroAsiento;
 
-    public function __construct(int $idPasajero, int $idVuelo, int $idUsuario, int $numeroAsiento)
+    public function __construct(int $idPasajero, int $idVuelo, int $idUsuario)
     {
-        $this->idPasajero = $idPasajero;
-        $this->idVuelo = $idVuelo;
-        $this->idUsuario = $idUsuario;
-        $this->numeroAsiento = $numeroAsiento;
+        $this->setIdPasajero($idPasajero);
+        $this->setIdVuelo($idVuelo);
+        $this->setIdUsuario($idUsuario);
     }
 
 
@@ -173,14 +171,4 @@ class Pasajero extends Dato
         $this->idUsuario = $idUsuario;
     }
 
-
-    public function getNumeroAsiento(): int
-    {
-        return $this->numeroAsiento;
-    }
-
-    public function setNumeroAsiento(int $numeroAsiento): void
-    {
-        $this->numeroAsiento = $numeroAsiento;
-    }
 }
