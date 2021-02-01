@@ -258,7 +258,7 @@ class DAO
         $rsV = self::ejecutarConsulta(
             //"SELECT * FROM Vuelos WHERE id=(SELECT idVuelo FROM Pasajeros WHERE idUsuario=?) ORDER BY id;",
             "SELECT * FROM vuelos INNER JOIN pasajeros WHERE vuelos.id = pasajeros.idVuelo 
-                && pasajeros.idUsuario=1 ORDER BY vuelos.id;",
+                && pasajeros.idUsuario=? ORDER BY vuelos.id;",
             [$idUsuario]
         );
 
