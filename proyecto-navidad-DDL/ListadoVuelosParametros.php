@@ -82,7 +82,10 @@ $sesionIniciada = DAO::haySesionIniciada();
 
 <br><br>
 <a href='FormularioReservaVuelos.php'>Volver</a><br><br>
-<a href='ListadoVuelosCompleto.php'>Todos los Vuelos</a><br><br>>
+<a href='ListadoVuelosCompleto.php'>Todos los Vuelos</a><br><br>
+<!--
+<a href='SesionInicioMostrarFormulario.php'>Iniciar Sesion</a><br><br>
+<a href="SesionCerrar.php">Cerrar Sesion</a>-->
 </body>
 
 <style>

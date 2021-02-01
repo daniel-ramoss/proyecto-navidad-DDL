@@ -2,6 +2,8 @@
 //formulario para la creación del usuario en caso de que no exista
 require_once "-com/Varios.php";
 require_once "-com/Dao.php";
+
+
 ?>
 
 <html>
@@ -14,14 +16,21 @@ require_once "-com/Dao.php";
 
 <h1>Crear Usuario</h1>
 <div>
-<form action='SesionInicioComprobar.php' method='get'>
-    <p>Usuario: <input type='text' name='identificador' /></p>
-    <p>Contraseña: <input type='password' name='contrasenna' /></p>
+<form action='UsuarioGuardar.php' method='post'>
+    <label><strong>Nombre: </strong></label>
+    <input type='text' name='nombre'><br><br>
+    <label><strong>Apellidos: </strong></label>
+    <input type='text' name='apellidos'><br><br>
+    <label><strong>Usuario: </strong></label>
+    <input type='text' name='identificador' /><br><br>
+    <label><strong>Contraseña: </strong></label>
+    <input type='password' name='contrasenna' /><br><br>
     <input type='submit' name='boton' value="Enviar" />
 </form>
 </div>
 <br>
-<a href='SesionInicioMostrarFormulario.php'>Ya estoy registrado</a>
+<a href='SesionInicioMostrarFormulario.php'>Ya estoy registrado</a><br><br>
+<a href='FormularioReservaVuelos.php'>Pagina Inicial</a>
 
 </body>
 <style>

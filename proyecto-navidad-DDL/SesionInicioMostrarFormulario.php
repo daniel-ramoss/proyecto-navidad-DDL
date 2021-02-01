@@ -34,9 +34,11 @@ $datosErroneos = isset($_REQUEST["datosErroneos"]);
     <input type='checkbox' name='recordar' id='recordar'>
     <br><br>
     <input type='submit' name='iniciarSesion' value='Iniciar Sesión'>
+    <a href='CrearUsuarioMostrarFormulario.php'>Crear Cuenta</a>
 </form>
+
 </div>
-<br>
+
 <br><br>
 <a href="FormularioReservaVuelos.php">Pagina Principal</a><br><br>
 <a href='ListadoVuelosCompleto.php'>Mostrar Vuelos</a>

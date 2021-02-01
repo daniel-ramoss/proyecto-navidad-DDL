@@ -3,28 +3,26 @@ require_once "-com/Varios.php";
 require_once "-com/Dao.php";
 
 $vuelos=DAO::vueloObtenerTodas();
-$sesionIniciada = DAO::haySesionIniciada();
+$sesionIniciada=DAO::haySesionIniciada();
 ?>
 
 <html>
-<head>
-    <meta charset="UTF-8">
+<head> <meta charset="UTF-8"> </head>
+<?php
+if($sesionIniciada){?>
+    <p>Hola, <a href='UsuarioPerfilVer.php'><?=$_SESSION["nombre"]?> <?=$_SESSION["apellidos"]?></a> <a href='SesionCerrar.php'>(Cerrar Sesión)</a></p>
     <?php
-    if($sesionIniciada){?>
-        <p>Hola, <a href='UsuarioPerfilVer.php'><?=$_SESSION["nombre"]?> <?=$_SESSION["apellidos"]?></a> <a href='SesionCerrar.php'>(Cerrar Sesión)</a></p>
-        <?php
-    }else{?>
-        <p><a href='SesionInicioMostrarFormulario.php'>Inicio de Sesión</a></p>
-        <?php
-    }
-    ?>
-
-</head>
+}else{?>
+    <p><a href='SesionInicioMostrarFormulario.php'>Inicio de Sesión</a></p>
+    <?php
+}
+?>
 <body>
 <h1>Listado de Vuelos</h1>
+
 <table border='1'>
     <tr>
-        <th>Origen</th>
+        <th>Id</th>
         <th>Origen</th>
         <th>Destino</th>
         <th>Fecha ida</th>
@@ -33,9 +31,9 @@ $sesionIniciada = DAO::haySesionIniciada();
     </tr>
     <tr>
     <?php foreach ($vuelos as $vuelo) {
-        $id=$vuelo-> getId(); ?>
+        $id=$vuelo->getId(); ?>
     <tr>
-        <td> <?=$vuelo-> getId()?>      </td>
+        <td> <?=$vuelo->getId()?>      </td>
         <td> <?=$vuelo-> getOrigen()?>      </td>
         <td> <?=$vuelo-> getDestino()?>     </td>
         <td> <?=$vuelo-> getFechaIda()?>    </td>
@@ -48,7 +46,6 @@ $sesionIniciada = DAO::haySesionIniciada();
 <a href="FormularioReservaVuelos.php">Pagina Principal</a><br><br>
 
 <br><br>
-
 
 </body>
 

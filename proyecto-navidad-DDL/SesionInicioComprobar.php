@@ -12,7 +12,7 @@ if ($arrayUsuario != null) {
     DAO::marcarSesionComoIniciada($arrayUsuario);
 
     if (isset($_REQUEST["recordar"])) {
-       DAO::establecerSesionCookie($arrayUsuario);
+        DAO::establecerSesionCookie($arrayUsuario);
     }
     redireccionar("FormularioReservaVuelos.php");
 } else {

@@ -3,10 +3,11 @@
 //mostramos fecha ida, fecha vuelta, destino, lugar de origen...
 //links a contenidos publicos...
 //....
-require_once "-com/Varios.php";
 require_once "-com/Dao.php";
+require_once "-com/Varios.php";
 
-$sesionIniciada = DAO::haySesionIniciada();
+$sesionIniciada=DAO::haySesionIniciada();
+
 ?>
 
 <html>
@@ -41,6 +42,12 @@ $sesionIniciada = DAO::haySesionIniciada();
 <br>
 
 <a href='ListadoVuelosCompleto.php'> Listado de Vuelos </a><br><br>
+<!--
+<a href='CrearUsuarioMostrarFormulario.php'>Registrarse  </a>
+<!-- El segundo link debería llevar a CrearUsuarioMostrarFormulario.php y luego ese formulario tendrá un link debajo tipo:
+ -ya tengo una cuenta (la cual llevará a SesionInicioMostrarFormulario.php al hacer click en esa opción)
+<a href='UsuarioPerfilVer.php'>Ver Perfil </a><br><br>
+<a href='SesionCerrar.php'> Cerrar Sesion </a>-->
 </body>
 <style>
     html{

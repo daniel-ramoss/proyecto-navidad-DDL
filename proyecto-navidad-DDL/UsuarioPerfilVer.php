@@ -4,7 +4,7 @@ require_once "-com/Dao.php";
 require_once "-com/Varios.php";
 
 if (DAO::haySesionIniciada()) {
-    $id= $_SESSION["id"];
+    $id=$_SESSION["id"];
     $nombre=$_SESSION["nombre"];
     $apellidos=$_SESSION["apellidos"];
     $identificador=$_SESSION["identificador"];
