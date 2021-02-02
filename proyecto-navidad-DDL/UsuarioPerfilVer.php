@@ -3,14 +3,14 @@
 require_once "-com/Dao.php";
 require_once "-com/Varios.php";
 
-if (DAO::haySesionIniciada()) {
-    $id=$_SESSION["id"];
-    $nombre=$_SESSION["nombre"];
-    $apellidos=$_SESSION["apellidos"];
-    $identificador=$_SESSION["identificador"];
-    $rs=DAO::pasajeroObtenerTodasId($id);
+if (!DAO::haySesionIniciada()) {
+   redireccionar("ListaVuelosParametros.php");
 }
-
+$id=$_SESSION["id"];
+$nombre=$_SESSION["nombre"];
+$apellidos=$_SESSION["apellidos"];
+$identificador=$_SESSION["identificador"];
+$rs=DAO::pasajeroObtenerTodasId($id);
 ?>
 
 <html>
@@ -36,7 +36,7 @@ if (DAO::haySesionIniciada()) {
         <td> <?=$vuelo-> getDestino()?>     </td>
         <td> <?=$vuelo-> getFechaIda()?>    </td>
         <td> <?=$vuelo-> getFechaVuelta()?> </td>
-        <td> <a href="PasajeroEliminar.php"</a> (X) </td>
+        <td> <a href="PasajeroEliminar.php?id=<?=$vuelo-> getId()?>"</a> (X) </td>
     </tr>
     <?php } ?>
     </tr>

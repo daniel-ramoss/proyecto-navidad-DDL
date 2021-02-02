@@ -236,11 +236,11 @@ class DAO
             [$pasajero->getIdVuelo(),$pasajero->getIdUsuario(),$pasajero->getIdPasajero()]);
     }
 
-    public static function pasajeroEliminar(string $idUsuario)
+    public static function pasajeroEliminar(string $idUsuario,$idVuelo)
     {
         self::ejecutarActualizacion(
-            "DELETE FROM Pasajeros WHERE idUsuario=?",
-            [$idUsuario]
+            "DELETE FROM Pasajeros WHERE idUsuario=? and idVuelo=?",
+            [$idUsuario,$idVuelo]
         );
     }
 
